@@ -12,7 +12,7 @@ namespace Albiflora.API.Migrations
     public partial class InitialCreateWithSeeding : Migration
     {
         /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
+        protected override void Up(MigrationBuilder migrationBuilder) 
         {
             migrationBuilder.CreateTable(
                 name: "Shops",
