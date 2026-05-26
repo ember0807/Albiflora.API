@@ -1,0 +1,6 @@
+@Albiflora.API_HostAddress = http://localhost:5108
+
+GET {{Albiflora.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

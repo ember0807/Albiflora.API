@@ -1,0 +1,334 @@
+﻿.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: white;
+    border-right: 1px solid #eee;
+    padding: 20px;
+}
+
+.sidebar-logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #d46a7e;
+    margin-bottom: 40px;
+}
+
+.sidebar-nav button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    text-align: left;
+    background: none;
+    border: none;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #666;
+}
+
+    .sidebar-nav button.active {
+        background-color: #fff0f3;
+        color: #d46a7e;
+        font-weight: bold;
+    }
+
+.dashboard-main {
+    flex: 1;
+    padding: 40px;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.inventory-table-container {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .inventory-table th {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 2px solid #f8f9fa;
+        color: #888;
+    }
+
+    .inventory-table td {
+        padding: 15px;
+        border-bottom: 1px solid #f8f9fa;
+    }
+
+.status-danger {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.btn-table {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: 1px solid #d46a7e;
+    background: none;
+    color: #d46a7e;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-waste {
+    border-color: #ccc;
+    color: #888;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 400px;
+}
+
+    .modal-content input {
+        width: 100%;
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-sizing: border-box;
+    }
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn-save {
+    background-color: #d46a7e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* Контейнер статуса ИИ */
+.ai-status {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Обычный бейдж свежести */
+.ai-badge {
+    display: inline-block;
+    background-color: #e6f7ff;
+    color: #1890ff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid #91d5ff;
+    width: fit-content;
+}
+
+/* Когда товар портится (Критический риск) */
+.high-risk .ai-badge {
+    background-color: #fff1f0;
+    color: #f5222d;
+    border-color: #ffa39e;
+}
+
+/* Текст рекомендации от ИИ */
+.ai-advice {
+    font-size: 12px;
+    color: #52c41a; /* Зеленый для скидки, чтобы привлечь внимание к продаже */
+    font-style: italic;
+    font-weight: 500;
+}
+
+
+/* Индикатор количества */
+.qty-indicator {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+    /* Если цветов осталось мало */
+    .qty-indicator.critical {
+        color: #e74c3c;
+        background: #fdf2f2;
+        padding: 2px 8px;
+        border-radius: 5px;
+    }
+
+/* Заблокированная кнопка ИИ в меню */
+.nav-ai.locked {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(1);
+}
+
+.bouquet-modal {
+    border-top: 5px solid #9b59b6; /* Фиолетовая полоска сверху */
+}
+
+.btn-save-bouquet {
+    background-color: #9b59b6;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* --- СОВРЕМЕННЫЕ КНОПКИ ДЛЯ ALBIFLORA --- */
+
+/* Базовый стиль для всех кнопок управления в шапке */
+.header-controls button {
+    border: none;
+    padding: 10px 22px;
+    border-radius: 12px; /* Более округлые */
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Плавная анимация */
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Отступ между иконкой и текстом */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Легкая тень */
+}
+
+/* 📸 Витрина: Прозрачная с розовым отливом (Secondary) */
+.btn-secondary {
+    background-color: rgba(212, 106, 126, 0.1); /* Очень прозрачный розовый */
+    color: #d46a7e; /* Основной розовый цвет текста */
+    border: 1px solid rgba(212, 106, 126, 0.3) !important; /* Легкая рамка */
+}
+
+    .btn-secondary:hover {
+        background-color: rgba(212, 106, 126, 0.2); /* Чуть ярче при наведении */
+        transform: translateY(-1px); /* Легкое всплытие */
+    }
+
+/* + Поставка: Яркая розовая (Primary) */
+.btn-primary {
+    background-color: #d46a7e; /* Насыщенный розовый */
+    color: white;
+}
+
+    .btn-primary:hover {
+        background-color: #c55a6d; /* Чуть темнее при наведении */
+        box-shadow: 0 4px 10px rgba(212, 106, 126, 0.3); /* Розовая тень */
+        transform: translateY(-1px);
+    }
+
+/*  Создать букет:  */
+.btn-bouquet {
+    background-color: rgba(212, 106, 126, 0.1); /* Очень прозрачный розовый */
+    color: #d46a7e; /* Основной розовый цвет текста */
+    border: 1px solid rgba(212, 106, 126, 0.3) !important; /* Легкая рамка */
+
+    margin-left: 15px; /* Отступ от розовых кнопок */
+}
+
+    .btn-bouquet:hover {
+        background-color: rgba(212, 106, 126, 0.2); /* Чуть ярче при наведении */
+        transform: translateY(-1px); /* Легкое всплытие */
+        transform: translateY(-1px);
+    }
+
+/* Контейнер для кнопок в модалке */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+    /* Общий стиль для кнопок модального окна */
+    .modal-actions button {
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: none;
+    }
+
+/* Кнопка Отмена: прозрачно-серая */
+.btn-cancel {
+    background-color: #f0f0f0;
+    color: #666;
+}
+
+    .btn-cancel:hover {
+        background-color: #e5e5e5;
+        color: #333;
+    }
+
+/* Кнопка Выставить на витрину: фиолетовая (под стиль конструктора) */
+.btn-save-bouquet {
+    background-color: #9b59b6;
+    color: white;
+    box-shadow: 0 4px 10px rgba(155, 89, 182, 0.2);
+}
+
+    .btn-save-bouquet:hover {
+        background-color: #8e44ad;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 12px rgba(155, 89, 182, 0.3);
+    }
+
+/* Красивое поле выбора файла */
+.photo-upload input[type="file"] {
+    background: #f9f9f9;
+    padding: 8px;
+    border: 1px dashed #ddd;
+    cursor: pointer;
+    font-size: 13px;
+}
+.custom-file-label {
+    display: block;
+    padding: 20px;
+    border: 2px dashed #ddd; /* Пунктирная рамка */
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #fafafa;
+    transition: 0.3s;
+    color: #666;
+}
+
+    .custom-file-label:hover {
+        border-color: #9b59b6;
+        background-color: #f5f0f7;
+        color: #9b59b6;
+    }

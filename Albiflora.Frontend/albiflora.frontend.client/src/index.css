@@ -1,0 +1,26 @@
+/* Базовые сбросы стилей */
+:root {
+    font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    color-scheme: light; /* Оставляем светлую тему для флористического дизайна */
+    background-color: #ffffff;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    min-width: 320px;
+    min-height: 100vh;
+}
+
+#root {
+    width: 100%; /* Занимаем всю ширину экрана */
+    margin: 0;
+    padding: 0;
+}
+
+/* Сброс стандартных стилей ссылок и кнопок */
+button {
+    font-family: inherit;
+}

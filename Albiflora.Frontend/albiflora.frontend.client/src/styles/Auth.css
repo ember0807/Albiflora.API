@@ -1,0 +1,98 @@
+.auth-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fffcfd; /* Тот же фон, что на лендинге */
+}
+
+.auth-card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(212, 106, 126, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.auth-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #d46a7e;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.auth-title {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+    .input-group label {
+        display: block;
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 8px;
+        margin-left: 5px;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        font-size: 16px;
+        box-sizing: border-box;
+        transition: 0.3s;
+    }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #d46a7e;
+            box-shadow: 0 0 0 3px rgba(212, 106, 126, 0.1);
+        }
+
+.btn-auth {
+    width: 100%;
+    padding: 14px;
+    background-color: #d46a7e;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+    .btn-auth:hover {
+        background-color: #bc5a6d;
+        transform: translateY(-1px);
+    }
+
+.auth-options {
+    margin-top: 25px;
+    font-size: 14px;
+    color: #888;
+}
+
+.auth-link {
+    color: #d46a7e;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.auth-link-small {
+    margin-top: 10px;
+    font-size: 12px;
+    text-decoration: underline;
+    cursor: pointer;
+}
