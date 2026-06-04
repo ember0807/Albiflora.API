@@ -1,5 +1,5 @@
 
-const API_BASE_URL = 'http://130.193.35.154:7199/api';
+const API_BASE_URL = 'http://158.160.185.227:7199/api';
 export const apiRequest = async (endpoint, options = {}) => {
     const token = localStorage.getItem('token');
 
