@@ -35,7 +35,7 @@ app.UseRouting(); // Сначала роутинг
 
 app.UseCors("AllowReactApp"); // Потом CORS строго с именем политики
 
-app.UseAuthentication(); // Если добавила JWT, то это здесь
+app.UseAuthentication(); //  JWT
 app.UseAuthorization();
 
 app.MapControllers();

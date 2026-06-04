@@ -11,5 +11,6 @@
 
         // ShopId , чтобы потом легко считать выручку магазина
         public int ShopId { get; set; }
+        public Shop? Shop { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace Albiflora.API.Controllers
                 .ToListAsync();
         }
 
-        // 2. ИИ-АНАЛИТИКА С ПРОВЕРКОЙ ПОДПИСКИ
+        // 2. АНАЛИТИКА С ПРОВЕРКОЙ ПОДПИСКИ
         [HttpGet("analytics/{shopId}")]
         public async Task<IActionResult> GetAiAnalytics(int shopId)
         {

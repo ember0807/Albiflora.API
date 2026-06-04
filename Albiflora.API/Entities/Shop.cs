@@ -25,6 +25,8 @@
         public decimal RentPrice { get; set; } = 0;
         public int? RentPaymentDate { get; set; }
         public decimal UtilityBills { get; set; } = 0;
+    
+        public ICollection<Transaction> transactions { get; set; } = new List<Transaction>();
     }
 }
 

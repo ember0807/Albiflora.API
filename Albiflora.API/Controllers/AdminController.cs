@@ -148,7 +148,7 @@ namespace Albiflora.API.Controllers
             return Ok(new { message = "Точка успешно релоцирована, весь штат сохранен за филиалом." });
         }
 
-        // 6. НОВЫЙ МЕТОД: Закрытие/Ликвидация филиала (С роспуском персонала в общий резерв)
+        // 6. Закрытие/Ликвидация филиала (С роспуском персонала в общий резерв)
         [HttpDelete("shops/{id}/close")]
         public async Task<IActionResult> CloseShop(int id)
         {

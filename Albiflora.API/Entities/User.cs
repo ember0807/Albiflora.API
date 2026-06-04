@@ -9,9 +9,9 @@
 
         // Привязка к магазину (может быть пустым для обычных клиентов или глобального директора)
         public int? ShopId { get; set; }
-        public Shop? Shop { get; set; } // Сделали nullable (добавили ?), чтобы не было ошибок типизации
+        public Shop? Shop { get; set; } //  nullable  ?, чтобы не было ошибок типизации
 
-        // --- ДОБАВИЛИ ПОЛЯ ДЛЯ VIP-ТАРИФА ДИРЕКТОРА ---
+        // ---  ПОЛЯ ДЛЯ VIP-ТАРИФА ДИРЕКТОРА ---
        public int TariffPlan { get; set; } = 0; // 0 = Базовый, 1 = VIP аналитика
        public bool IsSubscriptionActive { get; set; } = false; // Статус подписки
         public DateTime? SubscriptionEndDate { get; set; } // Дата окончания действия VIP

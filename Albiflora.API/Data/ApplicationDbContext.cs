@@ -32,7 +32,7 @@ namespace Albiflora.API.Data
             // Добавляем уникальный индекс для ключа лицензии
             modelBuilder.Entity<Shop>().HasIndex(s => s.LicenseKey).IsUnique();
 
-            // Добавляем стандартный набор цветов
+            {  // Добавляем стандартный набор цветов
             //modelBuilder.Entity<Flower>().HasData(
             //    new Flower { Id = 1, Name = "Роза", Variety = "Эквадор", Color = "Красный", ShelfLifeDays = 7, OptimalTemperature = 4.0, PhotoUrl = "rose_red.jpg" },
             //    new Flower { Id = 2, Name = "Пион", Variety = "Сара Бернар", Color = "Розовый", ShelfLifeDays = 5, OptimalTemperature = 3.5, PhotoUrl = "peony_pink.jpg" },
@@ -40,6 +40,7 @@ namespace Albiflora.API.Data
             //    new Flower { Id = 4, Name = "Тюльпан", Variety = "Стронг Голд", Color = "Желтый", ShelfLifeDays = 6, OptimalTemperature = 2.0, PhotoUrl = "tulip_yellow.jpg" },
             //    new Flower { Id = 5, Name = "Гортензия", Variety = "Магическая", Color = "Голубой", ShelfLifeDays = 4, OptimalTemperature = 6.0, PhotoUrl = "hydrangea_blue.jpg" }
             //);
+            }
             DbSeeder.SeedData(modelBuilder);
         }
 

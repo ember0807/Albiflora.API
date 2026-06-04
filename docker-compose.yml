@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: . # Собираем бэкенд из текущей папки корня
+      dockerfile: Dockerfile
+    ports:
+      - "7199:8080" # Открываем бэкенд наружу на порт 7199
+    volumes:
+      - backend-uploads:/app/wwwroot/uploads # Сохраняем фото букетов на сервере
+
+  frontend:
+    build:
+      context: ./Albiflora.Frontend/albiflora.frontend.client # Точный путь к папке фронтенда
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80" # Открываем фронтенд наружу на порт 3000
+    depends_on:
+      - backend
+
+volumes:
+  backend-uploads:
