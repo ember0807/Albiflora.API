@@ -7,20 +7,26 @@ const ShowcasePage = () => {
     const [bouquets, setBouquets] = useState([]);
     const navigate = useNavigate();
 
+    const API_BASE_URL = 'https://localhost:7199/api';
+
     useEffect(() => {
         const fetchBouquets = async () => {
             try {
-                const mockBouquets = [
-                    { id: 1, name: "Весенний нектар", price: 2500, url: "https://placehold.co/250x250/fce4ec/d46a7e?text=Bouquet+1" },
-                    { id: 2, name: "Ростовская роза", price: 3800, url: "https://placehold.co/250x250/fce4ec/d46a7e?text=Bouquet+2" }
-                ];
-                setBouquets(mockBouquets);
+                // Запрашиваем букеты с нашего нового GET-метода в C#
+                const response = await fetch(`${API_BASE_URL}/Bouquets`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setBouquets(data); // Передаем букеты (включая только что загруженные) в стейт
+                } else {
+                    console.error("Не удалось загрузить букеты с сервера");
+                }
             } catch (err) {
                 console.error("Ошибка загрузки витрины:", err);
             }
         };
         fetchBouquets();
     }, []);
+
 
     return (
         <>

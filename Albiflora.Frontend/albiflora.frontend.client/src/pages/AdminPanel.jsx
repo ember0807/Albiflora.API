@@ -14,6 +14,10 @@ const AdminPanel = () => {
     const createSearchRef = useRef(null);
     const relocateSearchRef = useRef(null);
 
+    // НОВЫЕ СОСТОЯНИЯ ДЛЯ ФИЛЬТРАЦИИ И СОРТИРОВКИ КАДРОВ
+    const [searchTerm, setSearchTerm] = useState('');
+    const [sortBy, setSortBy] = useState('email');
+
     // Управление правами персонала
     const [selectedUserId, setSelectedUserId] = useState(null);
     const [selectedRole, setSelectedRole] = useState('Florist');
@@ -74,20 +78,45 @@ const AdminPanel = () => {
         fetchData();
     }, []);
 
-    // 1. Новая функция: обрабатывает КЛИК МЫШКОЙ по карте
+    // Логика фильтрации поиска по кадрам (Email, Роль, Название магазина)
+    const filteredUsers = users.filter(user => {
+        const searchLower = searchTerm.toLowerCase();
+        const userRole = user.role || '';
+        const shopName = user.shopName || 'Не назначен';
+        return (
+            user.email.toLowerCase().includes(searchLower) ||
+            userRole.toLowerCase().includes(searchLower) ||
+            shopName.toLowerCase().includes(searchLower)
+        );
+    });
+
+    // Логика сортировки кадров
+    const sortedUsers = [...filteredUsers].sort((a, b) => {
+        if (sortBy === 'email') {
+            return a.email.localeCompare(b.email);
+        }
+        if (sortBy === 'role') {
+            return (a.role || '').localeCompare(b.role || '');
+        }
+        if (sortBy === 'shop') {
+            const shopA = a.shopName || 'Не назначен';
+            const shopB = b.shopName || 'Не назначен';
+            return shopA.localeCompare(shopB);
+        }
+        return 0;
+    });
+
     const handleMapClick = async (e, type) => {
-        const coords = e.get('coords'); // Получаем координаты клика [широта, долгота]
-        setMapCenter(coords); // Переносим маркер туда, куда кликнули
+        const coords = e.get('coords');
+        setMapCenter(coords);
 
         try {
-            // Запрашиваем у Яндекса текстовый адрес по координатам клика
             const response = await fetch(`https://geocode-maps.yandex.ru/1.x/?apikey=${YANDEX_MAPS_API_KEY}&geocode=${coords[1]},${coords[0]}&format=json&lang=ru_RU`);
             if (response.ok) {
                 const data = await response.json();
                 const geoObject = data.response.GeoObjectCollection.featureMember[0]?.GeoObject;
                 const textAddress = geoObject?.metaDataProperty.GeocoderMetaData.text || 'Точка на карте';
 
-                // Записываем адрес в нужный стейт в зависимости от модалки
                 if (type === 'create') {
                     setNewShop(prev => ({ ...prev, address: textAddress }));
                 } else if (type === 'relocate') {
@@ -99,7 +128,6 @@ const AdminPanel = () => {
         }
     };
 
-    // 2. Обновленная функция: ПОИСК при создании точки
     const handleCreateAddressSelect = () => {
         if (createSearchRef.current) {
             const result = createSearchRef.current.getResultsArray()[0];
@@ -108,12 +136,11 @@ const AdminPanel = () => {
                 const coords = result.geometry.getCoordinates();
 
                 setNewShop(prev => ({ ...prev, address: geoAddress }));
-                setMapCenter(coords); // Двигаем карту и маркер к найденному адресу
+                setMapCenter(coords);
             }
         }
     };
 
-    // 3. Обновленная функция: ПОИСК при переезде точки
     const handleRelocateAddressSelect = () => {
         if (relocateSearchRef.current) {
             const result = relocateSearchRef.current.getResultsArray()[0];
@@ -122,11 +149,10 @@ const AdminPanel = () => {
                 const coords = result.geometry.getCoordinates();
 
                 setShopToRelocate(prev => ({ ...prev, address: geoAddress }));
-                setMapCenter(coords); // Двигаем карту и маркер к найденному адресу
+                setMapCenter(coords);
             }
         }
     };
-
 
     const loadShopAnalytics = async (shopId) => {
         if (!isVipUser) {
@@ -267,7 +293,7 @@ const AdminPanel = () => {
 
                 {/* МОНИТОРИНГ И АНАЛИЗ */}
                 <div className="shops-management-section">
-                    <h3>📊 Мониторинг ликвидности и финансового здоровья</h3>
+                    <h3>📊 Мониторинг ликвидности и financial health</h3>
                     <div className="shops-grid">
                         {shops.map(shop => (
                             <div
@@ -310,31 +336,78 @@ const AdminPanel = () => {
                     </div>
                 </div>
 
-                {/* КАДРЫ */}
+                {/* КАДРЫ С ПОИСКОМ, СОРТИРОВКОЙ И СКРОЛЛБАРОМ НА 10 СТРОК */}
                 <div className="admin-content">
                     <div className="users-table-section">
-                        <h3>Кадровый состав сети</h3>
-                        <table className="admin-table">
-                            <thead>
-                                <tr><th>ID</th><th>Email</th><th>Текущая роль</th><th>Магазин</th><th>Действие</th></tr>
-                            </thead>
-                            <tbody>
-                                {users.map(u => (
-                                    <tr key={u.id} className={selectedUserId === u.id ? 'selected-row' : ''}>
-                                        <td>{u.id}</td><td>{u.email}</td>
-                                        <td><span className={`role-badge ${u.role}`}>{u.role}</span></td>
-                                        <td>{u.shopName || "Не назначен"}</td>
-                                        <td>
-                                            <button className="btn-select" onClick={() => {
-                                                setSelectedUserId(u.id); setSelectedRole(u.role); setSelectedShopId(u.shopId || '');
-                                            }}>Выбрать</button>
-                                        </td>
+                        <div className="staff-header-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', flexWrap: 'wrap', gap: '15px' }}>
+                            <h3 style={{ margin: 0, color: '#2c3e50' }}>Кадровый состав сети</h3>
+
+                            {/* Инструменты поиска и сортировки */}
+                            <div className="staff-filters" style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+                                <input
+                                    type="text"
+                                    className="staff-search-input"
+                                    placeholder="Поиск по email, роли, магазину..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    style={{ background: '#fff', border: '1px solid #d1d5db', border_radius: '6px', padding: '8px 12px', color: '#333', fontSize: '0.9rem', width: '250px', outline: 'none' }}
+                                />
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#4b5563', fontSize: '0.9rem', font_weight: '600' }}>
+                                    <label>Сортировка:</label>
+                                    <select
+                                        value={sortBy}
+                                        onChange={(e) => setSortBy(e.target.value)}
+                                        style={{ background: '#fff', border: '1px solid #d1d5db', border_radius: '6px', padding: '8px', color: '#333', cursor: 'pointer', outline: 'none' }}
+                                    >
+                                        <option value="email">По Email</option>
+                                        <option value="role">По Роли</option>
+                                        <option value="shop">По Магазину</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Скролл-контейнер  */}
+                        <div className="staff-table-scroll-container" style={{ maxHeight: '490px', overflowY: 'auto', border: '1px solid #eaeaea', border_radius: '12px', background: '#ffffff' }}>
+                            <table className="admin-table" style={{ width: '100%', borderCollapse: 'collapse', margin_top: 0 }}>
+                                <thead style={{ position: 'sticky', top: 0, zIndex: 5 }}>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Email</th>
+                                        <th>Текущая роль</th>
+                                        <th>Магазин</th>
+                                        <th>Действие</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {sortedUsers.length > 0 ? (
+                                        sortedUsers.map(u => (
+                                            <tr key={u.id} className={selectedUserId === u.id ? 'selected-row' : ''}>
+                                                <td>{u.id}</td>
+                                                <td style={{ fontFamily: 'monospace', color: '#2c3e50' }}>{u.email}</td>
+                                                <td><span className={`role-badge ${u.role}`}>{u.role}</span></td>
+                                                <td>{u.shopName || "Не назначен"}</td>
+                                                <td>
+                                                    <button className="btn-select" onClick={() => {
+                                                        setSelectedUserId(u.id); setSelectedRole(u.role); setSelectedShopId(u.shopId || '');
+                                                    }}>Выбрать</button>
+                                                </td>
+                                            </tr>
+                                        ))
+                                    ) : (
+                                        <tr>
+                                            <td colSpan="5" style={{ textAlign: 'center', padding: '30px', color: '#7f8c8d', font_style: 'italic' }}>Сотрудники не найдены</td>
+                                        </tr>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style={{ marginTop: '8px', fontSize: '0.8rem', color: '#7f8c8d', textAlign: 'right', font_style: 'italic' }}>
+                            Найдено: {sortedUsers.length} из {users.length} пользователей
+                        </div>
                     </div>
 
+                    {/* КАРТА НАСТРОЙКИ ДОСТУПА */}
                     <div className="management-card">
                         <h3>Настройка прав доступа</h3>
                         {selectedUserId ? (
@@ -417,7 +490,7 @@ const AdminPanel = () => {
 
                             <div className="form-group checkbox-group">
                                 <label className="switch-label">
-                                    <input type="checkbox" checked={newShop.isOwned} onChange={e => setNewShop({ ...newShop, isOwned: e.target.checked })} />
+                                    <input type="checkbox" checked={newShop.isOwned} onChange={e => setNewShop({ ...newShop, isOwned: e.checked })} />
                                     Помещение находится в собственности
                                 </label>
                             </div>

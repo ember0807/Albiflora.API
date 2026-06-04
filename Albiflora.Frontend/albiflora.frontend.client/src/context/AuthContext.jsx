@@ -28,5 +28,4 @@ export const AuthProvider = ({ children }) => {
     );
 };
 
-// ÂÎÒ ÝÒÀ ÑÒÐÎ×ÊÀ — ÃËÀÂÍÛÉ ÂÈÍÎÂÍÈÊ ÁÅËÎÃÎ ÝÊÐÀÍÀ
 export const useAuth = () => useContext(AuthContext); 

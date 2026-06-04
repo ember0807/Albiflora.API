@@ -447,3 +447,14 @@
     font-size: 0.9rem;
     border-left: 4px solid #1d72b8;
 }
+.staff-table-scroll-container th {
+    position: sticky;
+    top: 0;
+    background: #f8f9fa; /* Твой оригинальный цвет из .admin-table th */
+    color: #7f8c8d;
+    border-bottom: 2px solid #eaeaea;
+    z-index: 2;
+}
+.staff-search-input:focus {
+    border-color: #ff69b4 !important;
+}

@@ -23,7 +23,7 @@ const FloristPage = () => {
     const [bouquetPrice, setBouquetPrice] = useState('');
     const [bouquetPhoto, setBouquetPhoto] = useState(null);
 
-    // ИСПРАВИЛИ ОШИБКУ: Обернули функцию в useCallback и добавили startTransition
+    
     const loadData = useCallback(async () => {
         try {
             const shopRes = await fetch(`${API_BASE_URL}/Shops/${shopId}`);
@@ -49,7 +49,7 @@ const FloristPage = () => {
     // Вызываем loadData внутри useEffect
     useEffect(() => {
         loadData();
-    }, [loadData]); // Теперь массив зависимостей полностью заполнен верно
+    }, [loadData]); 
 
     const handleAddInventory = async (e) => {
         e.preventDefault();
